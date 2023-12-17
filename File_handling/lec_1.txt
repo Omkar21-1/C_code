@@ -1,0 +1,68 @@
+====================
+FILE HANDLING
+====================
+
+What is File
+-------------
+
+--> File is a sequecne characters.
+--> File is colletion of Records/Information
+--> File is created on Secondary Device.
+--> File is used to store information.
+
+File Handling
+--------------
+open()
+close()
+close()
+read()
+write()
+delete()
+
+
+FILE *fp;
+---------
+--> 'fp' is a file pointer.
+
+
+What EOF ?
+-----------
+--> It is End-Of-File having value -1.
+
+
+File is of Two Types -
+-----------------------
+1. Text File   : a.txt, a.doc, a.c, a.cpp, a.java
+2. Binary File : a.mp4, a.jpeg
+
+
+
+Code:
+------
+#include<stdio.h>
+#include<stdlib.h>
+
+int main()
+{
+	char fname[10];
+	FILE *fp;
+
+	printf("Enter the File Name to Read : ");
+	scanf("%s", fname);
+
+	fp = fopen(fname,"r");
+
+	if(fp == NULL)
+	{
+		printf("Problem : [%s] File Not Found !! \n", fname);
+		exit(0);
+	}
+
+
+	/* LOGIC */
+
+	fclose(fp);
+
+	printf("DONE !!");
+
+}
