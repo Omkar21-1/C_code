@@ -1,0 +1,235 @@
+Q. Accept File Name from user display its contents.
+
+#include<stdio.h>
+#include<stdlib.h>
+
+int main()
+{
+	char fname[10];  // To store file
+	FILE *fp;        // fp is a file pointer to hadle file
+	
+	char ch;
+
+
+	printf("Enter the File Name to Read : ");
+	scanf("%s", fname);
+
+	fp = fopen(fname,"r"); 
+
+	if(fp == NULL)
+	{
+		printf("Problem : File '%s' Not Found !! \n", fname);
+		exit(0);
+	}
+
+	/* LOGIC */
+
+	printf("Contents of a File : \n");
+	while(1)
+	{
+		ch = fgetc(fp);  
+
+		if(ch==EOF)
+		{
+			break;
+		}
+
+		printf("%c", ch);
+
+	}
+
+
+	fclose(fp);
+
+} 
+
+ 
+
+Q. Accept File Name from user display its contents and Size.
+#include<stdio.h>
+#include<stdlib.h>
+
+int main()
+{
+	char fname[10];  // To store file
+	FILE *fp;        // fp is a file pointer to hadle file
+	
+	char ch;
+	int cnt;
+
+	printf("Enter the File Name to Read : ");
+	scanf("%s", fname);
+
+	fp = fopen(fname,"r"); 
+
+	if(fp == NULL)
+	{
+		printf("Problem : File '%s' Not Found !! \n", fname);
+		exit(0);
+	}
+
+	/* LOGIC */
+
+	printf("Contents of a File : \n");
+
+	cnt= 0;
+	while(1)
+	{
+		ch = fgetc(fp);  
+
+		if(ch==EOF)
+		{
+			break;
+		}
+
+		cnt++;
+		printf("%c", ch);
+	}
+
+	printf("\n\nSize : %d Bytes \n", cnt);
+	fclose(fp);
+
+} 
+
+ 
+
+Q. Accept the file name & prints no. of characters, words and lines in it.
+----------------------------------------------------------------------------
+#include<stdio.h>
+#include<stdlib.h>
+
+int main()
+{
+	char fname[10];  // To store file
+	FILE *fp;        // fp is a file pointer to hadle file
+	
+	char ch;
+	int cnt,wcnt;
+	int lcnt;
+
+	printf("Enter the File Name to Read : ");
+	scanf("%s", fname);
+
+	fp = fopen(fname,"r"); 
+
+	if(fp == NULL)
+	{
+		printf("Problem : File '%s' Not Found !! \n", fname);
+		exit(0);
+	}
+
+	/* LOGIC */
+
+	printf("Contents of a File : \n");
+
+	cnt= 0;
+	wcnt = 0;
+	lcnt = 0;
+
+	while(1)
+	{
+		ch = fgetc(fp);  
+
+		if(ch==EOF)
+		{
+			break;
+		}
+
+		cnt++;
+
+		if(ch==' ' || ch=='\t')
+		{
+			wcnt++;
+		}
+		else if(ch=='\n')
+		{
+			lcnt++;
+			wcnt++;
+		}
+		
+	}
+
+	printf("No. of charcaters : %d  \n", cnt);
+	printf("No. of Words : %d  \n", wcnt);
+	printf("No. of Lines : %d  \n", lcnt);
+	fclose(fp);
+
+} 
+
+Q. Accept file name from user, display count of capital alphabets, small alphabets, digits & special characters.
+
+#include<stdio.h>
+#include<stdlib.h>
+
+int main()
+{
+	char fname[10];  // To store file
+	FILE *fp;        // fp is a file pointer to hadle file
+	
+	char ch;
+	int capcnt, smcnt, spcnt, dcnt;
+
+	printf("Enter the File Name to Read : ");
+	scanf("%s", fname);
+
+	fp = fopen(fname,"r"); 
+
+	if(fp == NULL)
+	{
+		printf("Problem : File '%s' Not Found !! \n", fname);
+		exit(0);
+	}
+
+	/* LOGIC */
+
+	printf("Contents of a File : \n");
+
+	capcnt = 0;
+	smcnt  = 0;
+	spcnt  = 0;
+	dcnt   = 0;
+
+	while(1)
+	{
+		ch = fgetc(fp);  
+
+		if(ch==EOF)
+		{
+			break;
+		}
+
+		if(ch >='A' && ch<='Z')
+		{
+			capcnt++;	
+		}
+		else if(ch>='a' && ch<='z')
+		{
+			smcnt++;
+		}
+		else if(ch>='0' && ch<='9')
+		{
+			dcnt++;
+		}
+		else
+		{
+			spcnt++;
+		}
+		
+	}
+
+	printf("No. Capital : %d  \n", capcnt);
+	printf("No. Small   : %d  \n", smcnt);
+	printf("No. Digits  : %d  \n", dcnt);
+	printf("No. Special chars  : %d  \n", spcnt);
+	fclose(fp);
+
+} 
+
+
+
+Assignment
+-----------
+
+Q. Accept the file name from user & print no. of vowels in it.
+				OR
+Q. Accept the file name from commnad prompt[Command Line Argument] & print no. of vowels in it.
