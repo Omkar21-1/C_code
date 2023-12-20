@@ -1,0 +1,155 @@
+
+Q. Copy one image/video/audio to another place
+
+#include<stdio.h>
+#include<stdlib.h>
+
+typedef char BUFFER;
+
+int main(int argc, char * argv[] )
+{
+	
+	FILE *fpr, *fpw;        // fp is a file pointer to hadle file
+	BUFFER b;
+	int n;
+	
+	if(argc < 3)
+	{
+		printf("Problem : Insufficient Arguments !!");
+		exit(0);
+	}
+	
+	fpr = fopen(argv[1],"rb"); 
+
+	if(fpr == NULL)
+	{
+		printf("Problem : File '%s' can not be opened for reading !! \n", argv[1]);
+		exit(0);
+	}
+
+	fpw = fopen(argv[2],"wb");
+
+	if(fpw == NULL)
+	{
+		printf("Problem : File '%s' can not be opened for Writing !! \n", argv[2]);
+		exit(0);
+	}
+
+	/* LOGIC */
+
+	
+	while(1)
+	{
+		n = fread(&b,sizeof(b), 1, fpr);
+
+		if(n==0)
+		{
+			break;
+		}
+
+		fwrite(&b,sizeof(b), 1, fpw);
+
+	}
+
+	fclose(fpr);
+	fclose(fpw);
+
+	printf("File %s is copied into %s succesfuuly !!! \n", argv[1], argv[2]);
+
+} 
+
+ 
+
+How to run
+------------
+] a.exe a.png b.png
+] a.exe a.mp4 b.mp4 
+] a.exe G:\study\a.mp4   D:\fy\C\b.mp4
+
+
+ftell(): 
+========
+--> It return position of a file pointer
+--> Positions starts from zero
+
+rewind():
+=========
+--> It takes file pointer to the begining i.e position zero
+
+
+Example:
+----------
+#include<stdio.h>
+#include<stdlib.h>
+
+int main()
+{
+	unsigned long int pos;
+	FILE *fp;
+	char ch;
+
+	fp = fopen("a.txt", "r");	
+	
+	printf("Position : %lu \n", ftell(fp));
+
+	ch = fgetc(fp);
+
+	printf("Char: %c \n", ch);
+	printf("Position : %lu \n", ftell(fp));
+
+	ch = fgetc(fp);
+	printf("Char: %c \n", ch);
+
+
+	rewind(fp);
+	printf("Position : %lu \n", ftell(fp));
+
+	
+	fclose(fp);
+} 
+
+
+Output
+=======
+Position : 0
+Char: A
+Position : 1
+Char: B
+Position : 0
+
+
+
+fseek(fp, how_many_byte, from)
+===============================
+--> It is used to move file pointer to any position in a file.
+--> from has 3 values -
+	1. SEEK_SET
+	2. SEET_CUR
+	3. SEEK_END
+--> "how_many_byte" can be positive or negative value which depend on "from" parameter.
+ 
+
+#include<stdio.h>
+#include<stdlib.h>
+
+int main()
+{
+	unsigned long int pos;
+	FILE *fp;
+	char ch;
+
+	fp = fopen("a.txt", "r");	
+	
+	fseek(fp,4,SEEK_SET);
+	fseek(fp,-2,SEEK_CUR);
+	fseek(fp,5, SEEK_CUR);
+
+
+	printf("Position : %lu \n", ftell(fp)); // 
+	ch = fgetc(fp);
+	printf("Char: %c \n", ch);
+	printf("Position : %lu \n", ftell(fp)); //
+
+
+	fclose(fp);
+}

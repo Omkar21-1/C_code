@@ -1,0 +1,169 @@
+
+Q. Can we Read file Line by Line ?
+Ans:
+Yes we can, Using fgets() function.
+
+gets()  - reads a line from  keybaord.
+fgets() - reads a line from  file.
+
+char line[10000];
+
+
+gets(line);
+fgets(arrayname, arraysize, filepointer)
+fgets(line, 100, ??);
+
+
+fgetc() : read a character from a file
+fgets() : reads a lines from a file
+
+Q. Read a given file line by line
+-----------------------------------
+#include<stdio.h>
+#include<stdlib.h>
+
+int main()
+{
+	char fname[10];  // To store file
+	FILE *fp;        // fp is a file pointer to hadle file
+	
+	char S[200];
+	
+	printf("Enter the File Name to Read : ");
+	scanf("%s", fname);
+
+	fp = fopen(fname,"r"); 
+
+	if(fp == NULL)
+	{
+		printf("Problem : File '%s' Not Found !! \n", fname);
+		exit(0);
+	}
+
+	/* LOGIC */
+
+	printf("Contents of a File : \n");
+
+	while(  fgets(S, sizeof(S), fp)   )
+	{
+		
+		printf("%s", S);
+	}
+	fclose(fp);
+} 
+
+ 
+Q. Accept the file name from "CommandLine", & display contents of it.
+---------------------------------------------------------------------
+
+
+#include<stdio.h>
+#include<stdlib.h>
+
+int main(int argc, char * argv[] )
+{
+	
+	FILE *fp;        // fp is a file pointer to hadle file
+	char S[200];
+	
+	if(argc < 2)
+	{
+		printf("Problem : Insufficient Arguments !!");
+		exit(0);
+	}
+	
+	fp = fopen(argv[1],"r"); 
+
+	if(fp == NULL)
+	{
+		printf("Problem : File '%s' Not Found !! \n", argv[1]);
+		exit(0);
+	}
+
+	/* LOGIC */
+
+	printf("Contents of a File : \n");
+
+	while(  fgets(S, sizeof(S), fp)   )
+	{
+		
+		printf("%s", S);
+		
+	}
+	fclose(fp);
+} 
+
+ 
+
+How run 
+=======
+gcc demo.c
+a.exe a.txt
+
+
+
+-----------------------------------
+
+"w": Write mode
+===============
+It file does not exists it open as a "new file"
+If file exist then it delets/overwrite it old data & open as a new file.
+
+
+Q. Write a code to copy one file to another file.
+   Accept the file names from command Line.
+
+#include<stdio.h>
+#include<stdlib.h>
+
+
+int main(int argc, char * argv[] )
+{
+	
+	FILE *fpr, *fpw;        // fp is a file pointer to hadle file
+	char S[200];
+	
+	if(argc < 3)
+	{
+		printf("Problem : Insufficient Arguments !!");
+		exit(0);
+	}
+	
+	fpr = fopen(argv[1],"r"); 
+
+	if(fpr == NULL)
+	{
+		printf("Problem : File '%s' can not be opened for reading !! \n", argv[1]);
+		exit(0);
+	}
+
+	fpw = fopen(argv[2],"w");
+
+	if(fpw == NULL)
+	{
+		printf("Problem : File '%s' can not be opened for Writing !! \n", argv[2]);
+		exit(0);
+	}
+
+	/* LOGIC */
+
+	while(  fgets(S, sizeof(S), fpr)   )
+	{
+		
+		fputs(S, fpw);
+		
+	}
+	fclose(fpr);
+	fclose(fpw);
+
+	printf("File %s is copied into %s succesfuuly !!! \n", argv[1], argv[2]);
+
+} 
+
+
+
+How to run 
+===========
+] gcc demo.c
+] a.exe a.txt b.txt
+
