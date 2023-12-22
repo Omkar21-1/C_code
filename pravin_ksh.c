@@ -12,7 +12,7 @@ int main()
 	
 	temp_n = n;
 	
-	while(temp_n>0)
+	while(temp_n)
 	{
 		a = temp_n%10;
 		rev = (rev*10)+a;
