@@ -1,3 +1,11 @@
+/*
+	File Reading and Writing:
+
+	Open a file named "data.txt" for writing. Write the numbers from 1 to 10, each on a new line.
+	Open the same file for reading, and print the numbers to the console.
+*/
+
+
 #include<stdio.h>
 
 int main()
@@ -46,8 +54,6 @@ int main()
 			a[0] = a[i];
 			rewind(fp);
 			fprintf(fp,"%d\n",a[0]);
-			
-			
 			break;
 		}
 		
