@@ -82,6 +82,70 @@ wkue
 fekls
 	
 
+====================================================================================================
+========
+ANSWER |
+========
+
+
+int lexicographic_sort(const char* a, const char* b) {
+    return strcmp(a, b);
+}
+
+int lexicographic_sort_reverse(const char* a, const char* b) {
+    return strcmp(b, a);
+}
+
+int sort_by_number_of_distinct_characters(const char* a, const char* b) {
+    int freq_a[26] = {0};
+    int freq_b[26] = {0};
+
+    for (int i = 0; a[i] != '\0'; i++)
+        freq_a[a[i] - 'a'] = 1;
+
+    for (int i = 0; b[i] != '\0'; i++)
+        freq_b[b[i] - 'a'] = 1;
+
+    int count_a = 0, count_b = 0;
+
+    for (int i = 0; i < 26; i++) {
+        count_a += freq_a[i];
+        count_b += freq_b[i];
+    }
+
+    if (count_a == count_b)
+        return lexicographic_sort(a, b);
+
+    return count_a - count_b;
+}
+
+int sort_by_length(const char* a, const char* b) {
+    int len_a = strlen(a);
+    int len_b = strlen(b);
+
+    if (len_a == len_b)
+        return lexicographic_sort(a, b);
+
+    return len_a - len_b;
+}
+
+void swap(const char** a, const char** b) {
+    const char* temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void string_sort(const char** arr, const int cnt, int (*cmp_func)(const char* a, const char* b)) {
+    for (int i = 0; i < cnt - 1; i++) {
+        for (int j = 0; j < cnt - i - 1; j++) {
+            if (cmp_func(arr[j], arr[j + 1]) > 0) {
+                swap(&arr[j], &arr[j + 1]);
+            }
+        }
+    }
+}
+
+====================================================================================================
 */
 
 #include <stdio.h>
