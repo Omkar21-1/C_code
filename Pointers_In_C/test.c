@@ -1,47 +1,23 @@
 #include<stdio.h>
-
-float a = 3.14;
-float **z;
-float **y;
-float ***x;
-float ****v;
-float ****w;
-
-
-
-
-
-float **fun1(float *);
-float ****fun2(float ***);
-
+#include<stdlib.h>
+void disp(int*);
+void show(int**);
 
 int main()
 {
-
+	int *p;
+	int i=10;
 	
-	printf("&a : %lu\n",&a);
-	printf("&z : %lu\n",&z);
-	printf("&y : %lu\n",&y);
-	printf("&x : %lu\n",&x);
-	printf("&v : %lu\n",&v);
-	printf("&w : %lu\n",&w);
+	p=(int *) malloc(40*sizeof(int));
 	
-
-
-	z = fun1 (&a);
-	printf("%lu %f\n",z,**z);
-
-}
-
-float **fun1(float *z)
-{
-	y = &z;
-	v = fun2(&y);
-	return (**v);
-}
-
-float ****fun2(float ***x)
-{
-	w = &x;
-	return(w);
+	printf("%d\n",sizeof(p));
+	
+	int a[2];
+	printf("%d\n",sizeof(a));
+	
+	char c[20];
+	printf("%d\n",sizeof(c));
+	
+	printf("%d\n",sizeof(i));
+	return 0;
 }

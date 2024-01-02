@@ -1,9 +1,10 @@
 #include<stdio.h>
-#include<time.h>
-
 int main()
 {
+	int a;
+	a = getchar();
 	
-	delay(100);
+	printf("%d\n",a);
+
 	return 0;
 }
