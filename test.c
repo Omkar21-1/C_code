@@ -3,12 +3,11 @@
 
 int main() {
 
-	int *a;
+	char s[10] = "1000#";
 	
+	int a = atoi(s);
 	
-	a = (int *) malloc(2 * sizeof(int));
-	
-	printf("%d\n",sizeof(a));
+	printf("%d",a);
     
     return 0;
 }

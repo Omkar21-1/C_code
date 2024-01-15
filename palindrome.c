@@ -1,3 +1,12 @@
+/* 
+	Palindrome: LOGIC	
+	
+	adhi NUmber reverse karaycha
+	reverse jhalela number check karaycha orignal number sobat
+	ek buffer memory vapraychi check karnya sathi
+*/
+
+
 #include<stdio.h>
 #include<stdlib.h>
 int main()
