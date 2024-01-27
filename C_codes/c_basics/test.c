@@ -1,46 +1,17 @@
-#include<stdio.h>
+#include <stdio.h>
+#include <math.h>
 
-int main()
-{
-  int a[20];
-  int j,i;
-  int temp;
-  int n;
-  int k;
+double customPow(double base, double exponent) {
+    return exp(exponent * log(base));
+}
 
-  printf("how many  data to store");
-  scanf("%d",&n);
+int main() {
+    double base = 0.5;
+    double exponent = 2147395600;
 
-  printf("hou many time rorate");
-  scanf("%d",&k);
+    double result = customPow(base, exponent);
 
-  for(i=1;i<=n;i++)
-  {
+    printf("%lf^%lf = %lf\n", base, exponent, result);
 
-          printf("enter data");
-          scanf("%d",&a[i]);
-
-  }
-    for(j=1;j<=k;j++)
-    {
-
-     temp=a[n];
-
-     for(i=n;i>=1;i--)
-     {
-             a[i]=a[i-1];
-     }
-
-       a[1]= temp;
-
-
-
-
-    }
-    for(i=1;i<=n;i++)
-    {
-            printf("%d",a[i]);
-    }
-
-   return 0;
+    return 0;
 }
