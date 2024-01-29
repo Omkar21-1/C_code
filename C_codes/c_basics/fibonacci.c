@@ -20,6 +20,7 @@ int main()
 	d1=1;
 	d2=0;
 
+	/*
 	printf("0 ");
 	for(i=1; i<=n; i++)
 	{
@@ -39,6 +40,7 @@ int main()
 		d2=d3;
 	
 	}
+	
 
 
 	return 0;

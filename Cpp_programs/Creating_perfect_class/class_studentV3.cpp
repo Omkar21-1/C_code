@@ -4,7 +4,7 @@ using namespace std;
 class Student
 {
 	private:
-		string RBT_no;
+		string PRN_no;
 		string studentName;
 		float OOP;
 		float FCP;
@@ -16,8 +16,8 @@ class Student
 		void accept()
 		{
 			cin.get();										//Clearing Buffer From Keyboard if Some Task is Performend Befor Calling This Function
-			cout<<"Enter RBT NO : ";								//Accepting RBT no From User
-			getline(cin,RBT_no);									//Storing it in "RBT_no"
+			cout<<"Enter PRN NO : ";								//Accepting RBT no From User
+			getline(cin,PRN_no);									//Storing it in "PRN_no"
 				
 			//cin.get();										//Clearing Buffer Form Keyboard
 			cout<<"Enter Student Name : ";								//Accepting Student Name From User
@@ -29,7 +29,9 @@ class Student
 			cin>>FCP;										//Storing it in "FCP"
 			cout<<"Enter Language (Englis/Germen/Japnise/Freanch) Marks : ";			//Accepting Language Marks From Student
 			cin>>LANG;										//Storing it in "LANG"
-			
+
+			cout<<endl;
+				
 			calculate_percentage();									//After Accepting Marks Calculating The The Percentage
 			calculate_grade();									//Giving the Grades According To The Percentage
 		}
@@ -70,7 +72,7 @@ class Student
 		}
 		void display()
 		{	
-			cout<<RBT_no << "\t    "<<studentName << "\t      " <<percentage << " \t " <<grade <<endl; 
+			cout<<PRN_no << "\t    "<<studentName << "\t      " <<percentage << " \t " <<grade <<endl; 
 		}
 };
 
