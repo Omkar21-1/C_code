@@ -9,7 +9,7 @@ class RECTANGLE{
 		float length;
 		float breadth;
 		float area;
-		
+	public:
 		void accept()
 		{
 			cout<<"Enter Length of Rectangle : ";
@@ -25,38 +25,20 @@ class RECTANGLE{
 		{
 			cout<<"Area of Rectangle : "<< area << endl;
 		}
-	public:
-		float find_area_of_rectangle(float length_func=0, float breadth_func=0)
+		
+		void find_area_of_rectangle()
 		{
-			//cout<< length_func << "\t" << breadth_func << endl;
-
-			
-			if(length_func==0 && breadth_func==0)
-			{
-				accept();
-			}
-			else
-			{
-				length = length_func;
-				breadth = breadth_func;
-			}
+			accept();
 			calculate();
 			display();	
-			return area;
 		}
 };
+
 int main()
 {
 	RECTANGLE rect1;
-	RECTANGLE rect2;
 
-	cout<<"Without Paramters "<< endl;
 	rect1.find_area_of_rectangle();
-
-	float length = 2;
-	float breadth = 4;
-	cout<< endl << "With Parameters "<< endl;
-	rect2.find_area_of_rectangle(length,breadth);
 
 	return 0;
 }
