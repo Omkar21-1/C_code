@@ -6,7 +6,7 @@ void accept(int* a, int n)
 	int i;
 	for(i=0; i<n; ++i) 
 	{
-		scanf("%d",a[i]);
+		scanf("%d",&a[i]);
 	}
 }
 
@@ -21,7 +21,7 @@ void shift_zeros_to_end(int *a, int n)
 		{
 			temp = a[i];
 			a[i] = a[not_zero];
-			a[not_zero] = a[i];
+			a[not_zero] = temp;
 			++not_zero;
 		}
 	}
@@ -34,8 +34,9 @@ void display(int* a, int n)
 	int i;
 	for(i=0; i<n; ++i) 
 	{
-		printff("%d ",a[i]);
+		printf("%d ",a[i]);
 	}
+	printf("\n");
 }
 
 
