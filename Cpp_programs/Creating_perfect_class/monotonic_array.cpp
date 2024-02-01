@@ -24,7 +24,7 @@ class monochromic{
                                 cin>>a[i];
                         }
                 }
-                void check()
+		void check()
                 {
                         int j = n-1;
                         for(int i=0; i<j; ++i)
