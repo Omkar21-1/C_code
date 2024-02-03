@@ -35,21 +35,21 @@ class RECTANGLE
 			area = 0;										//When Object of class RECTANGLE is Created without Parameter Then The Default Value For Area = 0;
 		}
 		
-		RECTANGLE(float &length_from_main, float &breadth_from_main)					/* CONSTRUCTOR of Class RECTANGLE "Parameterized Constructor"*/
+		RECTANGLE(float &length_from_main, float &breadth_from_main)/*BAD HABIT*/			/* CONSTRUCTOR of Class RECTANGLE "Parameterized Constructor"*/
 		{
 			length = length_from_main;								//When Object of class RECTANGLE is Created with Parameterized Constructor For length 
 			breadth = breadth_from_main;								//When Object of class RECTANGLE is Created with Parameterized Constructor For Breadth
 			area = 0;										//When Object of class RECTANGLE is Created with Parameterized Constructor Then The Default Value For Area = 0;
 		}
 		
-		RECTANGLE(RECTANGLE &object_passed_by_main)							/* CONSTRUCTOR of Class RECTANGLE "Copied Constructor" using reference*/
+		RECTANGLE(RECTANGLE &object_passed_by_main)/*BAD HABIT*/					/* CONSTRUCTOR of Class RECTANGLE "Copied Constructor" using reference*/
 		{
 			length = object_passed_by_main.length;							//length = object_passed_by_main chya length chi value
 			breadth = object_passed_by_main.breadth;						//breadth = object_passed_by_main chya breadth chi value
 			area = 0;										//When Object of class RECTANGLE is Created with Copied Constructor Then The Default Value For Area = 0;
 		}
 		
-		RECTANGLE(RECTANGLE *object_passed_by_main)							/* CONSTRUCTOR of Class RECTANGLE "Copied Constructor" using pointer*/
+		RECTANGLE(RECTANGLE *object_passed_by_main)/*BAD HABIT*/					/* CONSTRUCTOR of Class RECTANGLE "Copied Constructor" using pointer*/
 		{
 			length = object_passed_by_main->length;							//length = object_passed_by_main chya length chi value
 			breadth = object_passed_by_main->breadth;						//breadth = object_passed_by_main chya breadth chi value
