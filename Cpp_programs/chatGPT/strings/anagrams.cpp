@@ -36,11 +36,13 @@ class ANAGRAM
 			
 			*/
 		
+			/*
 			if(str1 != str2)
 			{
 				return 0;
-			}
-			return 1;			
+			}*/
+			
+			return (str1 == str2);			
 		}		
 
 
