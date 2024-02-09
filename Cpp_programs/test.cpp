@@ -1,29 +1,21 @@
 #include<iostream>
 using namespace std;
+#include<stdio.h>
 
 
-int addition(int &i, int &j)
-{
-	int ans = i+j;
-	return ans;
+int add(){
+    
+    printf("hello\n");
+    return 100;
+    
 }
 
 
-int main()
-{
-	
-	int i;
-	int j;
-	int ans;
+int a = add();
 
-	cout<<"Enter First Number : ";
-	cin>>i;
-	cout<<"Enter Second Number : ";
-	cin>>j;
+int main() {
+    // Write C code here
+    printf("Hello world\n");
 
-	ans = addition(i,j);
-
-	cout<<"Addition "<<ans<<endl;
-
-	return 0;
+    return 0;
 }
