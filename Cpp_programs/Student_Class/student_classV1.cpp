@@ -52,7 +52,7 @@ class STUDENT
 };
 
 
-/* FUNCTION DECKERATION */
+/* FUNCTION DEClERATION / FUNCTION PROTOTYPE */
 void start();
 int no_of_students();
 //void accept(STUDENT *,int &insert);
@@ -60,7 +60,7 @@ void display(STUDENT *,int &insert);
 
 
 
-
+/* FUNCTION CODE / FUNCTION BODY / FUNCTION DEFINATION */
 int no_of_students()
 {
 	/*
