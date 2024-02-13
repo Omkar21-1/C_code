@@ -10,7 +10,7 @@ using namespace std;
 
 bool check_anagram_palindrome(string str)
 {
-	sort(str.begin(), str.end());
+	//sort(str.begin(), str.end());
 	
 	for(int i=0; str[i]; ++i)
 	{
