@@ -87,5 +87,27 @@ int main()
 	ob.invert(c);
 	cout<< c <<endl;
 	
+	
+	delete []a;
+	
+	
+	/*
+	int i=10;
+	char ch = 'A';
+	
+	int *ii = &i;
+	
+	cout<<endl;
+	
+	void* p;
+	
+	p = (char*)ch;
+	cout<<sizeof(p)<<endl;
+	
+	p = (int*)i;
+	cout<<sizeof(p)<<endl;
+	
+	*/
+	
 	return 0;
 }
