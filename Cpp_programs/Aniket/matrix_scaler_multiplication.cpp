@@ -9,12 +9,12 @@
 #include<iostream>
 using namespace std;
 
-
+#define m 2
+#define n 2
 
 class Matrix
 {
-	const int m 2
-	const int n 2
+	
 	int **a;
 	
 	public:
@@ -43,7 +43,7 @@ class Matrix
 			}
 		}
 		
-		friend Matrix implementation(Matrix &t, int scaler);		
+		friend Matrix multiplyByScalar(Matrix &t, int scaler);		
 		
 		friend istream& operator >> (istream &in, Matrix &t);
 		friend ostream& operator << (ostream &out, Matrix &t);	
@@ -85,7 +85,7 @@ ostream& operator << (ostream &out, Matrix &t)
 	return out;
 }
 
-Matrix implementation(Matrix &t, int scaler)
+Matrix multiplyByScalar(Matrix &t, int scaler)
 {
 	Matrix temp_obj;
 	
@@ -110,7 +110,7 @@ int main()
 	cout<<"Enter Scaler : ";
 	cin>>scaler;
 
-	Matrix ob2 = implementation(ob1,scaler);
+	Matrix ob2 = multiplyByScalar(ob1,scaler);
 	cout<<endl<<"Matrix Elements of ob2 : "<<endl<<ob2;
 
 
