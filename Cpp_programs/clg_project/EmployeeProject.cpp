@@ -176,6 +176,81 @@ istream& operator >>(istream &in, PROJECT &p)
 
 
 
+
+
+
+
+/*
+
+//-------------------------------------------------------------------------------------------------------------
+
+bool searchProjectByEmployeeID(EMPLOYEE *e, int ecnt, PROJECT *p, int pcnt) {
+    int id;
+    cout << "Enter Employee ID: ";
+    cin >> id;
+    
+    bool found = false;
+    for (int i = 0; i < pcnt; ++i) {
+        for (int j = 0; j < p[i].emp_count; ++j) {
+            if (id == p[i].emp_id[j]) {
+                cout << "\nDetails of the project where Employee ID " << id << " is working:\n" << endl;
+                p[i].display();
+                found = true;
+                break;
+            }
+        }
+    }
+    
+    if (!found) {
+        cout << "Employee ID " << id << " is not associated with any project." << endl;
+    }
+    
+    return found;
+}
+
+
+
+bool searchEmployeeByProjectID(EMPLOYEE *e, int ecnt, PROJECT *p, int pcnt) {
+    int id;
+    cout << "Enter Project ID: ";
+    cin >> id;
+    
+    bool found = false;
+    for (int i = 0; i < pcnt; ++i) {
+        if (p[i].project_id == id) {
+            cout << "\nDetails of Project ID " << id << ":\n" << endl;
+            p[i].display();
+            cout << "\nEmployees working on this project:\n" << endl;
+            for (int j = 0; j < ecnt; ++j) {
+                for (int k = 0; k < p[i].emp_count; ++k) {
+                    if (e[j].employee_id == p[i].emp_id[k]) {
+                        e[j].display();
+                        cout << "-----------------------------------------" << endl;
+                        found = true;
+                        break;
+                    }
+                }
+            }
+            break;
+        }
+    }
+    
+    if (!found) {
+        cout << "Project ID " << id << " is not found." << endl;
+    }
+    
+    return found;
+}
+
+//----------------------------------------------------------------------------------
+
+
+*/
+
+
+
+
+
 bool search(EMPLOYEE *e,int ecnt, PROJECT *p, int pcnt)
 {
 	cin.get();
