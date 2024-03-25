@@ -41,7 +41,7 @@ int main()
 	println("1111","omkar");// output: [1111 omkar]
 	
 	/*varidic Ardumint lit */
-	print(1,2,3,4,5); 		// 1 2 3 4 5
+	print(1,2,3,4,5); 					// 1 2 3 4 5
 	print("BirthDate","of","Omkar",21,1,2005); 		//BirthDate of Omkar 21 1 2005 
 
 	
