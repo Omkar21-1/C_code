@@ -8,7 +8,7 @@ class Mystring
 		char *s;
 	public:
 		Mystring(){}
-		Mystring(const char *temp) 
+		Mystring(const char temp[]) 
 		{
 			if(strlen(temp)>100)
 			{
@@ -19,6 +19,10 @@ class Mystring
 			strcpy(s, temp);
 		}
 		
+		int len()
+		{
+			return strlen(this->s);
+		}
 		
 		char* operator + (Mystring& sob)
 		{
@@ -27,6 +31,8 @@ class Mystring
 				cout<<"Cant Perform String Concatination!!!\n";
 				exit(0);
 			}
+			
+			
 			strcat(this->s,sob.s);
 			return this->s;
 		} 
@@ -46,6 +52,11 @@ istream& operator >> (istream& in, Mystring& ob)
 {
 	char temp[100];
 	in>>temp;
+	if(strlen(temp)>100)
+	{
+		 cout<<"Cant Give memory!!!\n";
+		 exit(0);
+	}
 	delete[] ob.s;
 	ob.s = new char[strlen(temp) + 1];
 	
@@ -75,6 +86,7 @@ int main()
 	
 	cout<<endl<<"Conactination : "<<ob1+ob2<<endl;
 		
+
 	return 0;
 }
 
