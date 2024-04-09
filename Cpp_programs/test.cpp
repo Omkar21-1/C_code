@@ -1,31 +1,36 @@
-#include <iostream>
-
+/*#include <iostream>
 using namespace std;
-
-class Person {
+ 
+class Base {
 public:
-    Person(const string& first_name, const string& last_name) : first_name_(first_name), last_name_(last_name) {}
-    const string& get_first_name() const {
-      return first_name_;
-    }
-    const string& get_last_name() const {
-      return last_name_;
-    }
-private:
-    string first_name_;
-    string last_name_;
+    virtual void display() const { cout << "Base\n"; }
 };
-// Enter your code here.
-ostream& operator <<(ostream& out, Person& p)
-{
-    out<<p.get_first_name()<<" "<<p.get_last_name();
-    return out;
-}
-
+ 
+class Derived : public Base {
+public:
+    virtual void display() { cout << "Derived\n"; }
+};
+ 
 int main() {
-    string first_name, last_name, event;
-    cin >> first_name >> last_name >> event;
-    auto p = Person(first_name, last_name);
-    cout << p << " " << event << endl;
+    Base* ptr = new Derived;
+    ptr->display();
+    delete ptr;
     return 0;
+}
+*/
+
+
+
+
+
+
+#include <iostream>
+#include <cmath>
+ 
+int main() {
+    double num = -16.25;
+    std::cout << std::sqrt(num);
+   
+ 
+ return 0;
 }

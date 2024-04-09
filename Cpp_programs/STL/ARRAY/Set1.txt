@@ -1,0 +1,23 @@
+Of course! Here are some practice questions involving the Array class of the C++ Standard Template Library (STL):
+
+ 1.   Write a program to initialize an array of integers using the Array class and display its contents.
+ 
+ 2.   Implement a function that takes two arrays as input and returns true if they have the same elements in the same order, otherwise return false.
+ 
+ 3.   Create a program that finds the maximum element in an array of integers using the Array class.
+ 
+ 4.   Write a function to reverse the elements of an array using the Array class.
+ 
+ 5.   Implement a program to merge two sorted arrays into a single sorted array using the Array class.
+ 
+ 6.   Write a function that takes an array of integers and removes all occurrences of a specified value, using the Array class.
+ 
+ 7.   Develop a program that checks if an array is sorted in non-decreasing order using the Array class.
+ 
+ 8.   Implement a function to calculate the sum of all elements in an array using the Array class.
+ 
+ 9.   Write a program that takes an array of integers and rotates it left by a specified number of positions using the Array class.
+ 
+ 10.  Create a program to sort an array of integers in ascending order using the Array class and any sorting algorithm (e.g., bubble sort, selection sort, insertion sort).
+
+These questions should help you practice various operations and algorithms using the Array class in C++. Good luck with your practice! Let me know if you need further assistance with any of these questions.
