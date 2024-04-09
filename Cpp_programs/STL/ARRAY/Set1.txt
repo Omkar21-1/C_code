@@ -15,6 +15,9 @@ Of course! Here are some practice questions involving the Array class of the C++
  7.   Develop a program that checks if an array is sorted in non-decreasing order using the Array class.
  
  8.   Implement a function to calculate the sum of all elements in an array using the Array class.
+ ->
+ 	int sum = std::accumulate(arr.begin(), arr.end(), 0);
+ ====	
  
  9.   Write a program that takes an array of integers and rotates it left by a specified number of positions using the Array class.
  
