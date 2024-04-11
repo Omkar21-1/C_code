@@ -1,0 +1,29 @@
+======================
+ID : 201
+Menu - Shivsagar Palace
+======================
+1. Butter Chicken - Rs. 250
+2. Masala Dosa - Rs. 150
+3. Poha - Rs. 100
+4. Pav Bhaji - Rs. 180
+5. Veg Biryani - Rs. 200
+
+======================
+ID : 202
+Menu - Hotel Kohinoor
+======================
+1. Vada Pav - Rs. 50
+2. Chicken Tikka Masala - Rs. 300
+3. Paneer Butter Masala - Rs. 280
+4. Misal Pav - Rs. 120
+5. Seafood Platter - Rs. 400
+
+======================
+ID : 203
+Menu - Hotel Ambiance
+======================
+1. Thalipeeth - Rs. 80
+2. Chicken Kolhapuri - Rs. 320
+3. Modak - Rs. 70
+4. Batata Vada - Rs. 60
+5. Sol Kadhi - Rs. 100
