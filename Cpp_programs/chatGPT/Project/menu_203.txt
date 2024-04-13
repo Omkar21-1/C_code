@@ -1,0 +1,5 @@
+1 Thalipeeth 80
+2 Chicken_Kolhapuri 320
+3 Modak 70
+4 Batata_Vada 60
+5 Sol_Kadhi 100

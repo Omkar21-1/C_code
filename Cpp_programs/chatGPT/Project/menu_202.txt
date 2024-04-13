@@ -1,0 +1,5 @@
+1 Vada_Pav 50
+2 Chicken_Tikka_Masala 300
+3 Paneer_Butter_Masala 280
+4 Misal_Pav 120
+5 Seafood_Platter 400

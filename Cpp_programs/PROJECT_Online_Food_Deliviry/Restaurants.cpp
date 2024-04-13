@@ -31,11 +31,12 @@ class Restaurants
 			}
 		}
 		
-		int select_restaurants()
+		string select_restaurants()
 		{
-			int id=0;
+			string id="";
 			cout<<"Enter ID of The Restaurant to View Mwnu: ";
 			cin>>id;
+			id.insert(0,"ID : ");
 			return id;
 		}
 		
@@ -50,7 +51,7 @@ int main()
 {
 	Restaurants obj;
 	obj.display_restaurants();
-	obj.select_restaurants();
+	cout<<obj.select_restaurants()<<endl;
 	
 	return 0;	
 }

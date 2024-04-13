@@ -1,0 +1,5 @@
+1 Butter_Chicken 250
+2 Masala_Dosa 150
+3 Poha 100
+4 Pav_Bhaji 180
+5 Veg_Biryani 200
