@@ -1,0 +1,154 @@
+yatt joins chi practice keli ahe
+
+
+===============================================================
+-- Create "employees" table
+CREATE TABLE employees (
+    employee_id SERIAL PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    department_id INT
+);
+
+-- Insert values into "employees" table
+INSERT INTO employees (first_name, last_name, department_id) VALUES
+('John', 'Doe', 1),
+('Jane', 'Smith', 2),
+('Bob', 'Johnson', 1),
+('Alice', 'Williams', 3);
+
+-- Create "departments" table
+CREATE TABLE departments (
+    department_id SERIAL PRIMARY KEY,
+    department_name VARCHAR(50)
+);
+
+-- Insert values into "departments" table
+INSERT INTO departments (department_name) VALUES
+('HR'),
+('IT'),
+('Finance');
+
+
+------------------------------------------------------------------
+
+Now, let's move on to some questions involving JOINs.
+
+1    INNER JOIN:
+        Retrieve a list of employees with their first and last names, along with their corresponding department names.
+
+2    LEFT JOIN:
+        Display a list of all departments and the employees (if any) in each department.
+
+3    RIGHT JOIN:
+        List all employees and their departments, including departments without any employees.
+
+4    FULL OUTER JOIN:
+        Show a list of all employees and departments, indicating where there are matches and where there are not.
+        
+        
+=============================================================================================================================
+
+1=>
+
+SELECT e.first_name,e.last_name,d.department_name 
+FROM employees as e INNER JOIN departments as d ON e.department_id = d.department_id;
+
+ first_name | last_name | department_name 
+------------+-----------+-----------------
+ John       | Doe       | HR
+ Jane       | Smith     | IT
+ Bob        | Johnson   | HR
+ Alice      | Williams  | Finance
+
+------------------------------------------------------------------------------------------------
+
+
+2=>
+
+SELECT d.department_name,e.first_name,e.last_name
+FROM departments as d LEFT JOIN employees as e ON e.department_id = d.department_id;
+
+department_name | first_name | last_name 
+-----------------+------------+-----------
+ HR              | John       | Doe
+ IT              | Jane       | Smith
+ HR              | Bob        | Johnson
+ Finance         | Alice      | Williams
+(4 rows)
+
+------------------------------------------------------------------------------------------------
+
+
+3=>
+
+xxxx
+SELECT e.first_name,e.last_name,d.department_name 
+FROM employees as e RIGHT JOIN departments as d ON e.department_id = d.department_id;
+xxxx
+
+
+SELECT e.first_name, e.last_name, d.department_name 
+FROM  departments as d
+RIGHT JOIN employees as e ON e.department_id = d.department_id;
+
+ first_name | last_name | department_name 
+------------+-----------+-----------------
+ John       | Doe       | HR
+ Jane       | Smith     | IT
+ Bob        | Johnson   | HR
+ Alice      | Williams  | Finance
+(4 rows)
+
+------------------------------------------------------------------------------------------------
+
+
+
+4=>
+
+SELECT e.first_name,e.last_name,d.department_name 
+FROM employees as e FULL OUTER JOIN departments as d ON e.department_id = d.department_id;
+
+
+ first_name | last_name | department_name 
+------------+-----------+-----------------
+ John       | Doe       | HR
+ Jane       | Smith     | IT
+ Bob        | Johnson   | HR
+ Alice      | Williams  | Finance
+(4 rows)
+
+
+------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,86 @@
+								26-02-11
+							       ----------
+---------------------------------------------------------------------------------------------------------------------------------------------------
+Q. Can we return table from a function??
+
+
+	CREATE OR REPLACE FUNCTION table_1() RETURNS varchar AS'
+	DECLARE 
+		srec student%ROWTYPE;
+	BEGIN
+		select * INTO srec 
+		from student;
+		
+		return 1;
+	
+	END;
+	'LANGUAGE 'plpgsql';
+	
+	
+	
+	
+	
+	
+---------------------------------------------------------------------------------------------------------------------------------------------------
+=========
+CURSOR
+=========
+
+	
+		CREATE OR REPLACE FUNCTION get_info() RETURNS varchar AS'
+		DECLARE
+				
+		BEGIN
+			
+				
+				
+						
+		END;
+		'LANGUAGE 'plpgsql';
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

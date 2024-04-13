@@ -1,0 +1,200 @@
+Thursday
+------------
+
+
+
+
+CREATE OR REPLACE FUNCTION msg() RETURNS varchar AS'
+DECLARE
+       i int := 10;
+BEGIN
+       
+       return ''Value ='' || i;
+END;
+'LANGUAGE 'plpgsql';
+
+
+Q. Print Hello World 'n' times
+
+
+void show(int n)
+{
+
+       for(i=1; i<=n; i++)
+       {
+              pf("Hello World !!");
+       }
+}
+
+
+
+
+
+
+CREATE OR REPLACE FUNCTION show(n int) RETURNS boolean AS'
+DECLARE
+       i int;
+BEGIN
+           
+       for i IN 1..n
+       LOOP
+              raise notice ''Hello WORLD'';
+
+       END LOOP;
+
+       return true;
+
+END;
+'LANGUAGE 'plpgsql';
+
+
+
+CREATE OR REPLACE FUNCTION get_name(trno student.rno%TYPE) RETURNS student.name%TYPE AS'
+DECLARE
+       tname student.name%TYPE;
+BEGIN
+       select name INTO tname
+       from student where rno=trno;
+          
+       if NOT FOUND then
+              return ''NO RECORD FOUND for Roll Num = '' || trno;
+       end if;
+
+       return tname;
+
+END;
+'LANGUAGE 'plpgsql';
+
+
+
+var_name tablname.fieldname%TYPE
+
+tname    student . name    % TYPE;
+
+
+var_name tablename%ROWTYPE;
+srec     student%ROWTYPE;
+
+
+
+
+
+CREATE OR REPLACE FUNCTION all_info(trno int) RETURNS varchar AS'
+DECLARE
+     srec student%ROWTYPE;
+BEGIN
+      select * INTO srec
+      from student where rno=trno;
+      
+      if NOT FOUND then
+       return ''NO RECORD FOUND'';
+      end if;
+
+      return srec.rno ||''--'' || srec.name || ''--'' || srec.per;
+
+END;
+'LANGUAGE 'plpgsql';
+
+
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Q. display all records of student till rno<=n
+
+rno
+1
+2
+3
+4
+
+
+Select get_info(3);
+
+1 AAA 
+2 BBB
+3 CCC
+
+Q. user kadun ek number ghaychya ani tyachya khalche jitke rno ahet table madhe tya saglyancha data print jhala pahije..
+===============>
+		CREATE OR REPLACE FUNCTION get_info(n int) RETURNS boolean AS'
+		DECLARE
+			srec student%ROWTYPE;
+			trno int:=1;
+			i int:=1;
+			maximum int;
+		BEGIN
+			maximum := (select max(rno) from student);
+			
+			if n<0 then
+				raise notice ''PLEASE ENTER VALID DATA'';
+				return false;
+				
+			elseif n>maximum then
+				raise notice ''PLEASE ENTER VALID DATA'';
+				return false;
+				
+			else
+			for i IN 1..n
+			LOOP
+				select * INTO srec
+				from student
+				where rno=trno;
+				
+				raise notice ''% % % % '',srec.rno,srec.name,srec.per,srec.city;
+		
+				trno:=trno+1;
+				
+			END LOOP;
+			END if;
+			return true;
+		END;
+	'LANGUAGE 'plpgsql';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

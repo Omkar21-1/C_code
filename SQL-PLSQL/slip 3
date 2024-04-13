@@ -1,0 +1,153 @@
+
+--sleep 3 sql
+
+
+
+CREATE TABLE hospital(h_no int primary key ,h_name varchar(20),city varchar(30));
+
+CREATE TABLE docter(d_no int primary key,d_name varchar(20),speal varchar(20),
+	charges int,h_no int references hospital(h_no) on delete cascade
+);
+
+
+INSERT INTO hospital values(1,'aaa','pune');
+INSERT INTO hospital values(2,'bbb','mumbai');
+INSERT INTO hospital values(3,'ccc','dheli');
+INSERT INTO hospital values(4,'ddd','pune');
+
+
+INSERT INTO docter values(101,'a','md','1000',1);
+INSERT INTO docter values(102,'b','ms','2000',2);
+INSERT INTO docter values(103,'c','ma','3000',3);
+INSERT INTO docter values(104,'d','md','4000',4);
+
+
+--TRIGGER
+--=======
+
+
+CREATE OR REPLACE FUNCTION fun_check() returns trigger as'
+
+BEGIN
+
+	if new.charges <0  then
+
+	raise exception ''you cant update'';
+
+	return null;
+
+	end if;
+
+	return NEW;
+
+	
+	if old.charges <0   then
+
+	raise exception ''you cant delete'';
+
+	return null;
+
+	end if;
+
+	return old;
+
+	if new.charges <0 then
+
+	raise exception ''you cant insert'';
+
+	return null;
+
+	end if;
+
+	return NEW;
+
+end;
+'language plpgsql;
+
+
+CREATE TRIGGER trg_check
+BEFORE update or delete or INSERT
+on docter
+for each row
+Execute Procedure fun_check();
+
+
+update docter set charges=-1000 where d_no=101;
+
+mydb=# update docter set charges=-1000 where d_no=101;
+ERROR:  you cant update
+CONTEXT:  PL/pgSQL function fun_check() line 7 at RAISE
+
+
+INSERT INTO hospital values(1,'aaa','pune');
+
+
+
+
+delete from docter charges=3000 where d_no=101; 
+
+
+
+
+
+
+--=====================================================================
+--ii.
+--Write a function which will accept the name of the doctor and
+--print the hospital details that the doctor is visiting.
+
+
+
+CREATE OR REPLACE FUNCTION fun_find(tname varchar) RETURNS void as'
+DECLARE
+
+t_hno int;
+xname varchar;
+t_h_city varchar;
+
+begin
+
+	SELECT h_no, h_name, city 
+	INTO t_hno, xname, t_h_city 
+	FROM hospital, docter 
+	WHERE hospital.h_no = doctor.h_no 
+	AND d_name = tname;
+
+   raise notice ''% % %'',t_no,xname,t_h_city;
+
+end;
+'LANGUAGE 'plpgsql';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CREATE OR REPLACE FUNCTION fun_find(tname VARCHAR) RETURNS VOID AS
+$$
+DECLARE
+    t_hno INT;
+    xname VARCHAR;
+    t_h_city VARCHAR;
+BEGIN
+    SELECT hospital.h_no, h_name, city 
+    INTO t_hno, xname, t_h_city 
+    FROM hospital, docter 
+    WHERE hospital.h_no = docter.h_no 
+    AND d_name = tname;
+
+    RAISE NOTICE '% % %', t_hno, xname, t_h_city;
+END;
+$$
+LANGUAGE plpgsql;

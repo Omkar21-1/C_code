@@ -1,0 +1,268 @@
+		MANY-TO-MANY [M-M] relationship
+		
+		
+		
+		
+		
+		
+DROP TABLE st;
+DROP TABLE student;
+DROP TABLE teacher;
+
+
+CREATE TABLE student(
+		rno int primary key,
+		name varchar(10),
+		per float,	
+		city varchar(10)
+);
+
+CREATE TABLE teacher(
+		tno int primary key,
+		name varchar(10),
+		salary float,
+		city varchar(10)
+);
+
+CREATE TABLE st(
+		rno int REFERENCES student(rno) ON DELETE CASCADE ON UPDATE CASCADE,
+		tno int REFERENCES teacher(tno) ON DELETE CASCADE ON UPDATE CASCADE,
+		ldate DATE
+);
+
+
+
+
+____________________________________________________________________________________
+
+INSERT INTO student VALUES(1,'AAA',60,'PUNE'),(2,'BBB',70,'DELHI'),(3,'CCC',65,'MUMBAI'),(4,'DDD',80,'PUNE');
+
+
+INSERT INTO teacher VALUES(101,'PPP',10000,'PANJI'),(102,'QQQ',70000,'DELHI'),(103,'RRR',30000,'PUNE'),(104,'SSS',70000,'MUMBAI');
+
+
+INSERT INTO st VALUES(1,101,'2017-08-21'),(1,104,'2017-08-17'),(2,102,'2017-08-24'),(3,103,'2017-08-15'),(2,101,'2017-08-21');
+
+
+----------------------------------------------------------------------------------
+----------------------------------------------------------------------------------
+
+
+
+
+
+
+=================================================================================
+SELECT * from student,teacher,st
+WHERE student.rno = st.rno
+AND   teacher.tno = st.tno;
+
+==>
+rno | name | per |  city  | tno | name | salary |  city  | rno | tno |   ldate    
+-----+------+-----+--------+-----+------+--------+--------+-----+-----+------------
+   1 | AAA  |  60 | PUNE   | 101 | PPP  |  10000 | PANJI  |   1 | 101 | 2017-08-21
+   1 | AAA  |  60 | PUNE   | 104 | SSS  |  70000 | MUMBAI |   1 | 104 | 2017-08-17
+   2 | BBB  |  70 | DELHI  | 102 | QQQ  |  70000 | DELHI  |   2 | 102 | 2017-08-24
+   3 | CCC  |  65 | MUMBAI | 103 | RRR  |  30000 | PUNE   |   3 | 103 | 2017-08-15
+   2 | BBB  |  70 | DELHI  | 101 | PPP  |  10000 | PANJI  |   2 | 101 | 2017-08-21
+
+==================================================================================
+
+
+
+
+Q> DISPLAY NAME OF STUDENTS THOSE WHO ARE PRESENT FOR LECTURE
+==>
+
+	SELECT distinct student.name from student,st
+        WHERE student.rno = st.rno order by student.name;
+
+ name 
+------
+ AAA
+ BBB
+ CCC
+-----------------------------------------------------------------------
+
+
+Q>DISPLAY TEACHER WISE LIST OF STUDENT
+==>
+	SELECT teacher.name,student.name from student,teacher,st
+	WHERE student.rno = st.rno
+	AND   teacher.tno = st.tno;
+
+ name | name 
+------+------
+ PPP  | AAA
+ SSS  | AAA
+ QQQ  | BBB
+ RRR  | CCC
+ PPP  | BBB
+------------------------------------------------------------------------
+
+
+Q>DISPLAY STUDENT WISE LIST OF TEACHER
+==>
+	SELECT student.name,teacher.name from student,teacher,st
+	WHERE student.rno = st.rno
+	AND   teacher.tno = st.tno;
+
+name | name 
+------+------
+ AAA  | PPP
+ AAA  | SSS
+ BBB  | QQQ
+ CCC  | RRR
+ BBB  | PPP
+-----------------------------------------------------------------------------
+
+
+Q> DISPLAY STUDENT NAMES TO WHOME 'QQQ' IS TEACHING
+==>
+	SELECT student.name from student,teacher,st
+	WHERE student.rno=st.rno
+	AND teacher.tno=st.tno
+	AND teacher.name='QQQ';
+
+        AND teacher.name='QQQ';
+ name 
+------
+ BBB
+----------------------------------------------------------------------------
+
+Q> DISPLAY TEACHER NAMES THOSE ARE TEACHING STUDENT 'AAA'
+==>
+
+	SELECT teacher.name from student,teacher,st
+	WHERE student.rno=st.rno
+	AND teacher.tno=st.tno
+	AND student.name='AAA';
+
+name 
+------
+ PPP
+ SSS
+-----------------------------------------------------------------------------
+
+
+Q> SHOW NAME OF STUDENT THOSE ARE PRESENT ON '21-8-2017'.
+==>
+
+	SELECT student.name FROM student,st
+	WHERE student.rno=st.rno
+	AND ldate='2017-08-21';
+
+
+ name 
+------
+ AAA
+ BBB
+----------------------------------------------------------------------------
+
+
+Q> DISPLAY HOW MANY PRESENTS ON '21-8-2017'
+
+==>
+	SELECT count(*) from st
+	WHERE ldate='2017-08-21';
+
+count 
+-------
+     2
+------------------------------------------------------------------------
+
+Q> DISPLAY HOW MANY ABSENT ON '15-8-2017'
+==>
+	SELECT (select count(*) from st) - (SELECT count(*) from st
+        WHERE ldate='2017-08-21') as absent;
+ absent 
+--------
+      3
+
+-----------------------------------------------------------------------
+
+Q> DISPLAY NAME OF STUDENT THOSE ARE ABSENT ON '21-08-2017'
+==> 
+	SELECT student.name
+	FROM student 
+	WHERE rno NOT IN (select student.rno from student,st
+			  where student.rno=st.rno
+			  and ldate='2017-08-21');
+			  
+name 
+------
+ CCC
+ DDD
+	  
+----------------------------------------------------------------------
+
+
+
+Q> DISPLAY NAME OF STUDENT TO THEM MAX SALARIED TEACHER ARE TEACHING
+==>
+	SELECT * FROM teacher WHERE salary=(select max(salary) from teacher);
+	
+	
+	----
+	SELECT student.name from student,teacher,st
+	WHERE student.rno=st.rno
+	AND   teacher.tno=st.tno
+	AND salary=(select max(salary) from teacher);
+	
+name 
+------
+ AAA
+ BBB
+
+---------------------------------------------------------------
+
+================
+UNION
+================
+ DISPLAY STUDENT AND TEACHER FROM PUNE CITY
+
+==>
+	(select name from student where city='PUNE')
+	UNION
+	(select name from teacher where city='PUNE');
+
+
+name 
+------
+ DDD
+ RRR
+ AAA
+
+-------------------------------------------------------------------------------
+===================
+INTERSECT
+===================
+
+Q> DISPLAY COMMON CITIES BETWEEN STUDENT AND TEACHER
+==>
+	(select city from student)
+	INTERSECT
+	(select city from teacher);
+
+  city  
+--------
+ MUMBAI
+ DELHI
+ PUNE
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

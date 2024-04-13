@@ -1,0 +1,164 @@
+				MANY-TO-ONE || ONE-TO-MANY
+				
+				how you see depends on
+				
+
+
+
+		
+DROP TABLE student;
+DROP TABLE teacher;
+
+
+
+CREATE TABLE teacher(
+		tno int primary key,
+		name varchar(10),
+		salary float,
+		city varchar(10)
+);
+
+CREATE TABLE student(
+		rno int primary key,
+		name varchar(10),
+		per float,	
+		city varchar(10),
+		tno int REFERENCES teacher(tno) ON DELETE CASCADE ON UPDATE CASCADE,
+		ldate date
+);
+
+
+
+
+
+
+
+INSERT INTO teacher VALUES(101,'PPP',10000,'PANJI'),(102,'QQQ',70000,'DELHI'),(103,'RRR',30000,'PUNE'),(104,'SSS',70000,'MUMBAI');
+
+
+
+INSERT INTO student VALUES(1,'AAA',60,'PUNE',103,'2017-08-21'),(2,'BBB',70,'DELHI',104,'2017-08-15'),(3,'CCC',65,'MUMBAI',101,'2017-08-17'),(4,'DDD',80,'PUNE',101,'2017-08-15');
+
+
+
+
+
+
+
+
+
+
+==========================================================================================================================================================
+EXAMPLE's
+=========
+
+
+1)  Owner and Car is releated with one-to-many [1-M] relationship.
+
+	owner(liscense_no,name,address,phone_no
+	car(car_no,model,color)
+				Adding owner.liscense_no as foregin key in car table as car.liscense_no.
+
+__________________________________________________________________________________________________
+
+drop table car;
+drop table owner;
+
+
+
+create table owner(
+	license_no int primary key,
+	name varchar(20),
+	address varchar(20),
+	phone_no varchar(10) check(phone_no like'__________')
+	);
+	
+	
+create table car(
+	car_no int primary key,
+	model varchar(20),
+	color varchar(20),
+	license_no int REFERENCES owner(license_no) ON DELETE CASCADE ON UPDATE CASCADE	
+	);
+	
+	
+		select * from owner,car where owner.license_no=car.license_no;
+
+
+
+------------------------------------------------------------------------------------------------
+
+
+-- Insert data into the owner table
+INSERT INTO owner (license_no, name, address, phone_no) VALUES
+
+	   	  (1, 'John', '123 Main St', '1234567890'),
+		  (2, 'Alice', '456 Oak St', '9876543210'),
+		  (3, 'Bob', '789 Pine St', '5551234567');
+
+
+
+-- Insert data into the car table
+INSERT INTO car (car_no, model, color, license_no) VALUES
+
+		(101, 'Sedan', 'Blue', 1),
+		(102, 'SUV', 'Red', 1),
+		(103, 'Hatchback', 'Green', 2),
+		(104, 'Convertible', 'Yellow', 3);
+
+___________________________________________________________________________________________________
+
+
+TABLE====>
+
+select * from owner;
+ license_no | name  |   address   |  phone_no  
+------------+-------+-------------+------------
+          1 | John  | 123 Main St | 1234567890
+          2 | Alice | 456 Oak St  | 9876543210
+          3 | Bob   | 789 Pine St | 5551234567
+
+
+
+select * from car;
+ car_no |    model    | color  | license_no 
+--------+-------------+--------+------------
+    101 | Sedan       | Blue   |          1
+    102 | SUV         | Red    |          1
+    103 | Hatchback   | Green  |          2
+    104 | Convertible | Yellow |          3
+
+
+
+
+select * from owner,car where owner.license_no=car.license_no;
+		
+license_no | name  |   address   |  phone_no  | car_no |    model    | color  | license_no 
+------------+-------+-------------+------------+--------+-------------+--------+------------
+          1 | John  | 123 Main St | 1234567890 |    101 | Sedan       | Blue   |          1
+          1 | John  | 123 Main St | 1234567890 |    102 | SUV         | Red    |          1
+          2 | Alice | 456 Oak St  | 9876543210 |    103 | Hatchback   | Green  |          2
+          3 | Bob   | 789 Pine St | 5551234567 |    104 | Convertible | Yellow |          3
+          
+----------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

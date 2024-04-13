@@ -1,0 +1,222 @@
+ 			ONE-TO-ONE [1-1] Relationship
+ 			
+ 
+ 			"Use 'UNIQUE' key for not duplicate value"
+ 			==========================================			
+ 
+Database design:
+		groom AND bride related with 1-1 relationship with descriptive attribute
+		------------------------------------------------------------------------
+		
+			groom(gno,name)
+			bride(bno,name,gno,mdate)
+				       ----------
+				       
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+				     
+				     
+drop table bride;
+drop table groom;
+
+
+
+create table groom(
+	gno int primary key,
+	name varchar(10)
+	);		
+	
+create table bride(
+	bno int primary key,
+	name varchar(10),
+	gno int references groom(gno) on update cascade on delete cascade UNIQUE,
+	mdate date
+	);
+	
+-----------------------------------------------------------------------------------------------
+
+insert into groom values(1,'AAA');
+insert into groom values(2,'BBB');
+insert into groom values(3,'CCC');
+insert into groom values(4,'DDD');
+
+
+
+insert into bride values(101,'PPP',3,'2017-01-27');
+insert into bride values(102,'QQQ',1,'2020-06-05');
+insert into bride values(103,'RRR',4,'2020-07-10');
+insert into bride values(104,'SSS',2,'2020-08-15');
+
+------------------------------------------------------------------------------------------------
+
+TABLE====>
+
+
+select * from groom;
+ gno | name 
+-----+------
+   1 | AAA
+   2 | BBB
+   3 | CCC
+   4 | DDD
+(4 rows)
+
+
+
+select * from bride;
+ bno | name | gno |   mdate    
+-----+------+-----+------------
+ 101 | PPP  |   3 | 2017-01-27
+ 102 | QQQ  |   1 | 2020-06-05
+ 103 | RRR  |   4 | 2020-07-10
+ 104 | SSS  |   2 | 2020-08-15
+(4 rows)
+
+
+
+select * from groom,bride where groom.gno=bride.gno;
+ gno | name | bno | name | gno |   mdate    
+-----+------+-----+------+-----+------------
+   1 | AAA  | 102 | QQQ  |   1 | 2020-06-05
+   2 | BBB  | 104 | SSS  |   2 | 2020-08-15
+   3 | CCC  | 101 | PPP  |   3 | 2017-01-27
+   4 | DDD  | 103 | RRR  |   4 | 2020-07-10
+(4 rows)
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+=================
+ASSIGNMENT
+=================
+
+country(con_code,name,capital)
+population(pop_code,population_count)
+
+Country & Population are related with 1-1 relationship.
+Create RDB & solve the following queries:
+	
+	1. list highest population country
+	2. Give name & population of thee country whose capital is Delhi.
+	3. List names of all country whose population is greater than 50,00,000
+	
+
+________________________________________________________________________________________________-------
+	
+drop table population;
+drop table country;
+
+create table country(
+	con_code int primary key,
+	name varchar(10),
+	capital varchar(20)
+	);
+
+create table population(
+	pop_code int primary key,
+	population_count bigint unique,
+	con_code int REFERENCES country(con_code) ON DELETE CASCADE ON UPDATE CASCADE UNIQUE	
+	);
+
+--------------------------------------------------------------------------------------------------
+
+
+DATA ===>
+
+country_code	country			population
+-----------------------------------------------------
++91 		India 			1,392,329,000
++960		Maldives	 	382,751
++975  		Bhutan 			770,276
++7	 	Russia		 	146,424,729
+
+
+---------------------------------------------------------------------------------------------------
+
+
+insert into country values(91,'INDIA','DELHI');
+insert into country values(960,'MALDIVES','MALE');
+insert into country values(975,'BHUTAN','BHUTANESE NGULTRUM');
+insert into country values(7,'RUSSIA','MOSCOW');				       
+				       
+				       
+insert into population values(1,1392329000,91);				    
+insert into population values(2,382751,960);	
+insert into population values(3,770276,975);					       
+insert into population values(4,146424729,7);					       
+				       
+				       
+------------------------------------------------------------------------------------------------------
+
+
+TABLE====>
+select * from country;
+ con_code |   name   |      capital       
+----------+----------+--------------------
+       91 | INDIA    | DELHI
+      960 | MALDIVES | MALE
+      975 | BHUTAN   | BHUTANESE NGULTRUM
+        7 | RUSSIA   | MOSCOW
+(4 rows)
+
+
+select * from population;
+ pop_code | population_count | con_code 
+----------+------------------+----------
+        1 |       1392329000 |       91
+        2 |           382751 |      960
+        3 |           770276 |      975
+        4 |        146424729 |        7
+(4 rows)
+
+
+select * from country,population where country.con_code=population.con_code;
+ con_code |   name   |      capital       | pop_code | population_count | con_code 
+----------+----------+--------------------+----------+------------------+----------
+       91 | INDIA    | DELHI              |        1 |       1392329000 |       91
+      960 | MALDIVES | MALE               |        2 |           382751 |      960
+      975 | BHUTAN   | BHUTANESE NGULTRUM |        3 |           770276 |      975
+        7 | RUSSIA   | MOSCOW             |        4 |        146424729 |        7
+(4 rows)
+
+
+-------------------------------------------------------------------------------------------------------
+
+ANSWERS===>
+
+1)select country.name as highest_population from country,population where country.con_code=population.con_code and country.con_code in(select con_code from population where population_count in (select max(population_count) from population));
+
+
+ highest_population 
+--------------------
+ INDIA
+(1 row)
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+2)select country.name as country,population_count from country,population where country.con_code=population.con_code and capital='DELHI';
+
+ country | population_count 
+---------+------------------
+ INDIA   |       1392329000
+(1 row)
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+3)select name as country,population_count from country,population where country.con_code=population.con_code and population.population_count>5000000;
+
+ country | population_count 
+---------+------------------
+ INDIA   |       1392329000
+ RUSSIA  |        146424729
+(2 rows)
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+				       
+				       
