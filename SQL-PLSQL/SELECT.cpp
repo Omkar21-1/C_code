@@ -19,6 +19,7 @@ int main()
 		cerr<<"Query Execution Failded : "<<PQerrorMessage(conn)<<endl;
 		PQclear(res);
 		PQfinish(conn);
+		return 1;
 	}
 	
 	int row = PQntuples(res);
