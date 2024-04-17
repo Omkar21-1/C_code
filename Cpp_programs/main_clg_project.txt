@@ -1,0 +1,171 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+// Class to represent a menu item
+class MenuItem {
+private:
+        string name;
+        float price;
+
+public:
+        MenuItem(string name, float price) : name(name), price(price) {}
+
+        // Getter for item name
+        string getName() const
+        {
+                return name;
+        }
+
+        // Getter for item price
+        float getPrice() const
+        {
+                return price;
+        }
+};
+
+// Class to represent a restaurant menu
+class Menu {
+private:
+        string restaurantName;
+        MenuItem* items;
+        int numItems;
+
+public:
+        Menu(string restaurantName, MenuItem* items, int numItems) : restaurantName(restaurantName), items(items), numItems(numItems) {}
+
+        // Display the menu
+        void displayMenu()
+        {
+                cout << "Menu for " << restaurantName << ":" << endl;
+                for (int i = 0; i < numItems; ++i)
+                {
+                        cout << i + 1 << ". " << items[i].getName() << " - Rs " << items[i].getPrice() << endl;
+                }
+        }
+
+        // Place an order for one item
+        MenuItem placeOrder(int choice)
+        {
+                if (choice >= 1 && choice <= numItems)
+                {
+                        cout << "You have ordered: " << items[choice - 1].getName() << endl;
+                        return items[choice - 1];
+                }
+                else
+                {
+                        cout << "Invalid choice. Please select a valid menu item." << endl;
+                        return MenuItem("", 0);
+                }
+        }
+
+        // Getter for restaurant name
+        string getRestaurantName() const
+        {
+                return restaurantName;
+        }
+};
+
+// Function to generate and display the bill
+void generateBill(const vector<MenuItem>& orderedItems, const string& restaurantName)
+{
+        cout << "=====================" << endl;
+        cout << "      BILL" << endl;
+        cout << "=====================" << endl;
+        cout << "Restaurant: " << restaurantName << endl;
+        cout << "Ordered Items:" << endl;
+        float totalAmount = 0;
+        for (const auto& item : orderedItems)
+        {
+                cout << item.getName() << " - Rs " << item.getPrice() << endl;
+                totalAmount += item.getPrice();
+        }
+        cout << "Total Amount: Rs " << totalAmount << endl;
+        cout << "=====================" << endl;
+}
+
+int main()
+{
+        // Define menu items for different restaurants
+        MenuItem items1[] = {
+                MenuItem("Paneer Tikka", 200),
+                MenuItem("Butter Chicken", 300),
+                MenuItem("Naan", 50),
+                MenuItem("Rice", 100)
+        };
+        MenuItem items2[] = {
+                MenuItem("Veg Biryani", 150),
+                MenuItem("Chicken Biryani", 250),
+                MenuItem("Gulab Jamun", 80),
+                MenuItem("Raita", 60)
+        };
+        MenuItem items3[] = {
+                MenuItem("Masala Dosa", 100),
+                MenuItem("Idli Sambhar", 120),
+                MenuItem("Vada Pav", 50),
+                MenuItem("Filter Coffee", 80)
+        };
+
+        // Create menus for different restaurants
+        Menu menu1("Spice Delight", items1, 4);
+        Menu menu2("Biryani House", items2, 4);
+        Menu menu3("South Treats", items3, 4);
+
+        // Display menus for different restaurants
+        cout << "=====================" << endl;
+        cout << "Select a restaurant:" << endl;
+        cout << "1. Spice Delight" << endl;
+        cout << "2. Biryani House" << endl;
+        cout << "3. South Treats" << endl;
+        cout << "=====================" << endl;
+
+        // Get user choice of restaurant
+        int restaurantChoice;
+        cout << "Enter the number of the restaurant: ";
+        cin >> restaurantChoice;
+
+        Menu* selectedMenu;
+        switch (restaurantChoice)
+        {
+        case 1:
+                selectedMenu = &menu1;
+                break;
+        case 2:
+                selectedMenu = &menu2;
+                break;
+        case 3:
+                selectedMenu = &menu3;
+                break;
+        default:
+                cout << "Invalid choice. Exiting..." << endl;
+                return 1;
+        }
+
+        vector<MenuItem> orderedItems;
+        // Display menu of the selected restaurant
+        selectedMenu->displayMenu();
+
+        // Get user choice and place order
+        char choice;
+        do
+        {
+                int menuItemChoice;
+                cout << "Enter the number of the item you want to order: ";
+                cin >> menuItemChoice;
+
+                // Place order and store the ordered item
+                MenuItem orderedItem = selectedMenu->placeOrder(menuItemChoice);
+                orderedItems.push_back(orderedItem);
+
+                // Ask if user wants to order more
+                cout << "Do you want to order more items? (Y/N): ";
+                cin >> choice;
+        } while (choice == 'Y' || choice == 'y');
+
+        // Generate and display bill
+        generateBill(orderedItems, selectedMenu->getRestaurantName());
+
+        return 0;
+}
