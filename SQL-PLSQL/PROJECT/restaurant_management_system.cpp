@@ -3,7 +3,7 @@
 #include<string>
 using namespace std;
 
-
+//this Class is to connect database
 class ConnectDB
 {
 	protected:
@@ -11,6 +11,7 @@ class ConnectDB
 		PGresult *res;
 		
 	public:
+		//connecting database
 		ConnectDB()  
 		{
 			conn = PQconnectdb("dbname=restaurant_management_system user=postgres password='omkar@9826'");
@@ -22,7 +23,7 @@ class ConnectDB
 			}
 		}
 
-
+		//setter getter
 		void setConnection(PGconn *connection) 
 		{
 			conn = connection;
@@ -42,13 +43,15 @@ class ConnectDB
 		
 		
 		
-		
+		//after sucessfull completion of order disconnecting to database
 		~ConnectDB()
 		{	
 			PQfinish(conn);
 		}
 };
 
+
+//This class is for register user or login user
 class Users: public ConnectDB
 {
 	protected:
@@ -86,9 +89,12 @@ class Users: public ConnectDB
 			return password;
 		}
 		
-				
+		//this function is for register user 
+		//if user registered successfully it returns true else false		
 		bool register_user()
 		{
+			cout<<"\n\n--- Register Page ---\n\n"<<endl;
+			
 			cout<<"Enter Username : ";
 			cin>>username;
 			cout<<"Enter Password : ";
@@ -108,8 +114,13 @@ class Users: public ConnectDB
 				return 0;
 			}
 		}
+		
+		//this function is for login user
+		//If user logined successfully it returns true else false
 		bool login_user()
 		{
+			cout<<"\n\n--- Login Page ---\n\n"<<endl;
+		
 			cout<<"Enter Username : ";
 			cin>>username;
 			cout<<"Enter Password : ";
@@ -137,6 +148,8 @@ class Users: public ConnectDB
 		~Users(){}
 };
 
+
+//This class generates new order id for user every time he wants to order something 
 class Orders 
 {
 	protected:
@@ -146,6 +159,7 @@ class Orders
 		PGconn *conn;
 		PGresult *res;
 	public:
+		//Setting connection to database
 		Orders(string user_id="-1",PGconn *conn = NULL ,string order_date="00") : user_id(user_id), conn(conn), order_date(order_date) {} 
  
 		//setters getters
@@ -174,6 +188,8 @@ class Orders
 			return order_date;
 		}		
 		
+		//This fuction give order id to user 
+		//If there is no problem it returns true else false
 		bool give_order_id_to_user()
 		{
 			
@@ -222,7 +238,8 @@ class Orders
 
 
 
-
+//This class is for displaying restaurents
+//this class will have more features in future 
 class Restaurant 
 {
 	protected:
@@ -232,6 +249,7 @@ class Restaurant
 		PGconn *conn;
 		PGresult *res;
 	public:
+		//setting connections
 		Restaurant(PGconn *conn = NULL ) : conn(conn) {}
 		
 		//getter setter
@@ -260,6 +278,8 @@ class Restaurant
 			return address;
 		}
 		
+		
+		//this function displays restaurants if evry thing work properly it returns true else false
 		bool display_restaurants()
 		{
 			res = PQexec(conn,"SELECT * FROM Restaurant");
@@ -271,7 +291,9 @@ class Restaurant
 			}
 			int row = PQntuples(res);
 			int col = PQnfields(res);
-
+			
+			cout<<"\n\n--- Restaurants Detials ---\n\n"<<endl;
+			
 			// Displaying headers
 			for (int i = 0; i < col; ++i) 
 			{
@@ -293,8 +315,10 @@ class Restaurant
 			return 0;
 		}
 		
+		//this function selects the restaurant id
 		void select_restaurant()
 		{
+			cout<<"\n\n---  ---\n\n"<<endl;
 			cout<<"Enter Restaurant Id : ";
 			cin>>restaurant_id;
 		}
@@ -304,7 +328,8 @@ class Restaurant
 
 };
 
-
+//This class is for showing menu for selected restaurant id
+//This class will have more features in future
 class Menus
 {
 	protected:
@@ -312,8 +337,11 @@ class Menus
 		PGresult *res;
 		string restaurant_id;
 	public:
+		//setting connections
 		Menus(PGconn *conn=NULL, string restaurant_id="NA") : conn(conn),restaurant_id(restaurant_id) {}
 
+		//displaying menu for selected restaurant id
+		//if evry thing works properly it return true else false
 		bool display_menu()
 		{
 			string sql = "SELECT * FROM Menus WHERE restaurant_id = " + restaurant_id;
@@ -327,6 +355,8 @@ class Menus
 			int row = PQntuples(res);
 			int col = PQnfields(res);
 
+			cout<<"\n\n--- Menu ---\n\n"<<endl;
+			
 			// Displaying headers
 			for (int i = 0; i < col; ++i) 
 			{
@@ -351,6 +381,10 @@ class Menus
 		~Menus(){}
 };
 
+
+//this class is final class to make order 
+//here we add menus to our list and its quentity
+//this class will have more features in future
 class Order_Items
 {
 	protected:
@@ -360,8 +394,10 @@ class Order_Items
 		string order_id;
 		string quantity;
 	public:
+	//setting connections
 	Order_Items(PGconn *conn=NULL, string order_id="", string menu_id="", string quantity="") : conn(conn), menu_id(menu_id), order_id(order_id), quantity(quantity) {}
 		
+		//this function places the order
 		bool place_order()
 		{
 			string sql = "INSERT INTO Order_Items (order_id,menu_id,quantity) VALUES ($1,$2,$3)";
@@ -379,6 +415,28 @@ class Order_Items
 				return 1;
 			}
 			PQclear(res);
+			return 0;
+		}
+		
+		//this function is for multipule ordering
+		bool make_order()
+		{	
+			cout<<"\n\n--- Order Here ---\n\n"<<endl;
+			
+			char ord = 'Y';
+			do
+			{
+				if( place_order() )
+				{
+					return 1;
+				}
+				cout<<"Order More ? [Y/N]: ";
+				cin>>ord;
+				if(ord == 'n' || ord == 'N')
+				{
+					break;
+				}		
+			}while(ord == 'Y' || ord == 'y');
 			return 0;
 		}
 	
@@ -420,11 +478,11 @@ int main()
 	}
 	
 	Order_Items obj5(obj1.getConnection(), obj2.getOrderID());
-	if( obj5.place_order() )
+	
+	if( obj5.make_order() )
 	{
 		return 1;
 	}
-	
 	
 	
 	cout<<"Done!!"<<endl;
