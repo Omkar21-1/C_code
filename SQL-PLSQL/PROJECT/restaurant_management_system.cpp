@@ -190,7 +190,7 @@ class Orders
 			{	
 				PQclear(res);
 				
-				string buffer = "SELECT order_id FROM Orders WHERE user_id = '" + user_id + "'";
+				string buffer = "SELECT order_id FROM Orders ORDER BY order_id DESC";// WHERE user_id = '" + user_id + "'";
 				res = PQexec(conn, buffer.c_str() );
 				
 				if(PQresultStatus(res) != PGRES_TUPLES_OK)
@@ -307,10 +307,82 @@ class Restaurant
 
 class Menus
 {
-	
+	protected:
+		PGconn *conn;
+		PGresult *res;
+		string restaurant_id;
+	public:
+		Menus(PGconn *conn=NULL, string restaurant_id="NA") : conn(conn),restaurant_id(restaurant_id) {}
+
+		bool display_menu()
+		{
+			string sql = "SELECT * FROM Menus WHERE restaurant_id = " + restaurant_id;
+			res = PQexec(conn,sql.c_str());
+			if(PQresultStatus(res) != PGRES_TUPLES_OK)
+			{
+				cerr<<"Query Cant Exexute : "<<PQerrorMessage(conn)<<endl;
+				PQclear(res);
+				return 1;
+			}
+			int row = PQntuples(res);
+			int col = PQnfields(res);
+
+			// Displaying headers
+			for (int i = 0; i < col; ++i) 
+			{
+				cout.width(15);
+				cout << left << PQfname(res, i);
+			}
+			cout << endl;
+
+			// Displaying records
+			for (int i = 0; i < row; ++i) 
+			{
+				for (int j = 0; j < col; ++j) 
+				{
+					cout.width(15);
+					cout << left << PQgetvalue(res, i, j);
+				}
+				cout << endl;
+			}
+			return 0;
+		}
+		
+		~Menus(){}
 };
 
-
+class Order_Items
+{
+	protected:
+		PGconn *conn;
+		PGresult *res;
+		string menu_id;
+		string order_id;
+		string quantity;
+	public:
+	Order_Items(PGconn *conn=NULL, string order_id="", string menu_id="", string quantity="") : conn(conn), menu_id(menu_id), order_id(order_id), quantity(quantity) {}
+		
+		bool place_order()
+		{
+			string sql = "INSERT INTO Order_Items (order_id,menu_id,quantity) VALUES ($1,$2,$3)";
+			cout<<"Enter Menu Id : ";
+			cin>>menu_id;
+			cout<<"Enter Quantity : ";
+			cin>>quantity;
+			
+			const char *paramValues[3] = {order_id.c_str(),menu_id.c_str(),quantity.c_str()};
+			res = PQexecParams(conn, sql.c_str(), 3, NULL, paramValues, NULL, NULL, 0);
+			if(PQresultStatus(res) != PGRES_COMMAND_OK)
+			{
+				cerr<<"failded to execute query : "<<PQerrorMessage(conn)<< endl;
+				PQclear(res);
+				return 1;
+			}
+			PQclear(res);
+			return 0;
+		}
+	
+};
 
 
 
@@ -320,7 +392,7 @@ int main()
 	/*if( (obj.register_user()) )
 	{
 		return 1;
-	}
+	}*/
 	
 	if( (obj1.login_user()) )
 	{
@@ -332,7 +404,7 @@ int main()
 	if(obj2.give_order_id_to_user())
 	{
 		return 1;
-	}*/
+	}
 	
 	Restaurant obj3(obj1.getConnection());
 	if(obj3.display_restaurants())
@@ -341,8 +413,17 @@ int main()
 	}
 	obj3.select_restaurant();
 	
+	Menus ob4(obj1.getConnection(), obj3.getRestaurantID());
+	if(ob4.display_menu())
+	{
+		return 1;
+	}
 	
-	
+	Order_Items obj5(obj1.getConnection(), obj2.getOrderID());
+	if( obj5.place_order() )
+	{
+		return 1;
+	}
 	
 	
 	

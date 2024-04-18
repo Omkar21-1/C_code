@@ -1,12 +1,12 @@
-DATABASE NAME : \c restaurant_management_system;
+--DATABASE NAME : \c restaurant_management_system;
 
 
-1. User Table
+--1. User Table
 
-    Attributes:
-        Users ID (Primary Key)
-        Username
-        Password
+--    Attributes:
+--        Users ID (Primary Key)
+--        Username
+--        Password
        
 CREATE SEQUENCE user_id_start START 101;      
         
@@ -24,24 +24,25 @@ insert into Users (username,password) values ('rohan_borade','rohan123');
 SELECT * FROM Users;  
 
 
-DROP TABLE Users;
-DROP SEQUENCE user_id_start;
+--DROP TABLE Users;
+--DROP SEQUENCE user_id_start;
 
 
-====================================================================================================================================   
+--====================================================================================================================================   
 
 
    
-2. Order Table
+--2. Order Table
 
-    Attributes:
-        Orders ID (Primary Key)
-        User ID (Foreign Key referencing User Table)
-        Date
+--    Attributes:
+--        Orders ID (Primary Key)
+--        User ID (Foreign Key referencing User Table)
+--        Date
         
+CREATE SEQUENCE Orders_id_start START 1;
 
 CREATE TABLE Orders(
-		order_id SERIAL primary key,
+		order_id int primary key DEFAULT nextval ('Orders_id_start'),
 		user_id int NOT NULL REFERENCES Users(user_id) ON UPDATE CASCADE ON DELETE CASCADE,
 		order_date DATE NOT NULL DEFAULT CURRENT_DATE
 );
@@ -53,21 +54,21 @@ INSERT INTO Orders (user_id) values(104);
  
 SELECT * from Orders;         
         
-DROP TABLE Orders;
+--DROP TABLE Orders;
 
         
         
-====================================================================================================================================        
+--====================================================================================================================================        
         
         
         
         
-3. Restaurant Table
+--3. Restaurant Table
 
-    Attributes:
-        Restaurant ID (Primary Key)
-        Name
-        Address
+--    Attributes:
+--        Restaurant ID (Primary Key)
+--        Name
+--        Address
 
 CREATE SEQUENCE restaurant_id_start START 201; 
 
@@ -85,19 +86,19 @@ SELECT * FROM Restaurant;
 
 
 
-DROP TABLE Restaurant;
-DROP SEQUENCE restaurant_id_start;
+--DROP TABLE Restaurant;
+--DROP SEQUENCE restaurant_id_start;
 
-=======================================================================================================================
+--=======================================================================================================================
 
 
-4. Menu Table
+--4. Menu Table
 
-    Attributes:
-        Menu ID (Primary Key)
-        Restaurant ID (Foreign Key referencing Restaurant Table)
-        Name
-        Price
+--    Attributes:
+--        Menu ID (Primary Key)
+--        Restaurant ID (Foreign Key referencing Restaurant Table)
+--        Name
+--        Price
 
 
 CREATE SEQUENCE menu_id_start START 701;
@@ -130,18 +131,18 @@ SELECT * FROM Menus;
 
 
 
-DROP TABLE Menus;
-DROP SEQUENCE menu_id_start;
-=======================================================================================================================
+--DROP TABLE Menus;
+--DROP SEQUENCE menu_id_start;
+--=======================================================================================================================
 
 
-5. Order Items Table
+--5. Order Items Table
 
-    Attributes:
-        Order Item ID (Primary Key)
-        Order ID (Foreign Key referencing Order Table)
-        Menu ID (Foreign Key referencing Menu Table)
-        Quantity
+--    Attributes:
+--        Order Item ID (Primary Key)
+--        Order ID (Foreign Key referencing Order Table)
+--        Menu ID (Foreign Key referencing Menu Table)
+--        Quantity
 
 
 CREATE TABLE Order_Items(
@@ -160,9 +161,9 @@ INSERT INTO Order_Items (order_id,menu_id,quantity) VALUES (4,708,1);
 SELECT * FROM Order_Items;
 
 
-DROP TABLE Order_Items;
+--DROP TABLE Order_Items;
 
-=======================================================================================================================
+--=======================================================================================================================
 
 
 
