@@ -1,8 +1,74 @@
 #include<iostream>
 #include<postgresql/libpq-fe.h>
+#include <mutex>
 #include<string>
 using namespace std;
 
+
+//Creating SINGLETON class for database connections
+class ConnectDB
+{
+	private:
+		PGconn *conn;
+		PGresult *res;
+		ConnectDB() 
+		{
+			conn = PQconnectdb("dbname=restaurant_management_system user=postgres password='omkar@9826'");
+			if(PQstatus(conn) == CONNECTION_BAD)
+			{
+				cerr<<"Failded To Connect Database : "<<PQerrorMessage(conn)<<endl;
+				PQfinish(conn);
+				exit(0);
+			}	
+		}
+		
+		static ConnectDB *instancePtr;
+		static std::mutex mtx;
+	
+	public:
+		ConnectDB(const ConnectDB &CDB) = delete;
+		
+		static ConnectDB* getInstance()
+		{
+			std::lock_guard<std::mutex> lock(mtx); // Lock mutex for thread safety
+			if(instancePtr == NULL)
+			{
+				instancePtr = new ConnectDB();
+			}
+			return instancePtr;
+		}
+		  
+		//setter getter
+		void setConnection(PGconn *connection) 
+		{
+			conn = connection;
+		}
+		PGconn* getConnection() const 
+		{
+			return conn;
+		}
+		void setResult(PGresult *result) 
+		{
+			res = result;
+		}
+		PGresult* getResult() const 
+		{
+			return res;
+		}
+		
+		
+		
+		//after sucessfull completion of order disconnecting to database
+		~ConnectDB()
+		{	
+			PQfinish(conn);
+		}	
+	
+};
+ConnectDB* ConnectDB::instancePtr = NULL;
+std::mutex ConnectDB::mtx;
+
+/*
 //this Class is to connect database
 class ConnectDB
 {
@@ -48,20 +114,25 @@ class ConnectDB
 		{	
 			PQfinish(conn);
 		}
-};
+};*/
 
 
 //This class is for register user or login user
-class Users: public ConnectDB
+class Users
 {
 	protected:
 		string user_id;
 		string username;
 		string password;
-		
+		PGconn *conn;
+		PGresult *res;
 	
 	public:
-		Users(int user_id=0, string username="NA", string password=""){}
+		Users(int user_id=0, string username="NA", string password="")
+		{
+			ConnectDB* obj = ConnectDB::getInstance();
+			conn = obj->getConnection();
+		}
 		
 		//setters getters
 		void setUserID(string id) 
@@ -160,7 +231,11 @@ class Orders
 		PGresult *res;
 	public:
 		//Setting connection to database
-		Orders(string user_id="-1",PGconn *conn = NULL ,string order_date="00") : user_id(user_id), conn(conn), order_date(order_date) {} 
+		Orders(string user_id="-1",string order_date="00") : user_id(user_id), order_date(order_date) 
+		{
+			ConnectDB* obj = ConnectDB::getInstance();
+			conn = obj->getConnection();
+		} 
  
 		//setters getters
 		void setOrderID(const string& id)
@@ -250,7 +325,11 @@ class Restaurant
 		PGresult *res;
 	public:
 		//setting connections
-		Restaurant(PGconn *conn = NULL ) : conn(conn) {}
+		Restaurant() 
+		{
+			ConnectDB* obj = ConnectDB::getInstance();
+			conn = obj->getConnection();
+		}
 		
 		//getter setter
 		void setRestaurantID(const string& id) 
@@ -338,7 +417,11 @@ class Menus
 		string restaurant_id;
 	public:
 		//setting connections
-		Menus(PGconn *conn=NULL, string restaurant_id="NA") : conn(conn),restaurant_id(restaurant_id) {}
+		Menus(string restaurant_id="NA") : restaurant_id(restaurant_id) 
+		{
+			ConnectDB* obj = ConnectDB::getInstance();
+			conn = obj->getConnection();
+		}
 
 		//displaying menu for selected restaurant id
 		//if evry thing works properly it return true else false
@@ -395,7 +478,11 @@ class Order_Items
 		string quantity;
 	public:
 	//setting connections
-	Order_Items(PGconn *conn=NULL, string order_id="", string menu_id="", string quantity="") : conn(conn), menu_id(menu_id), order_id(order_id), quantity(quantity) {}
+	Order_Items(string order_id="", string menu_id="", string quantity="") :  order_id(order_id), menu_id(menu_id), quantity(quantity) 
+	{
+		ConnectDB* obj = ConnectDB::getInstance();
+		conn = obj->getConnection();
+	}
 		
 		//this function places the order
 		bool place_order()
@@ -458,26 +545,26 @@ int main()
 	}
 	
 	
-	Orders obj2(obj1.getUserID(),obj1.getConnection());
+	Orders obj2(obj1.getUserID());
 	if(obj2.give_order_id_to_user())
 	{
 		return 1;
 	}
 	
-	Restaurant obj3(obj1.getConnection());
+	Restaurant obj3;
 	if(obj3.display_restaurants())
 	{
 		return 1;
 	}
 	obj3.select_restaurant();
 	
-	Menus ob4(obj1.getConnection(), obj3.getRestaurantID());
+	Menus ob4( obj3.getRestaurantID());
 	if(ob4.display_menu())
 	{
 		return 1;
 	}
 	
-	Order_Items obj5(obj1.getConnection(), obj2.getOrderID());
+	Order_Items obj5( obj2.getOrderID());
 	
 	if( obj5.make_order() )
 	{
